@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">PrintfulMockApp</string>
+    <string name="title_activity_character_details">CharacterDetails</string>
+    <string name="films">%s%s\n</string>
+    <string name="name">Name: %s</string>
+    <string name="height">Height: %d</string>
+    <string name="mass">Mass: %d</string>
+    <string name="hairColor">Hair color: %s</string>
+    <string name="skinColor">Skin color: %s</string>
+    <string name="eyeColor">Eye color: %s</string>
+    <string name="birthYear">Birth year: %s</string>
+    <string name="gender">Gender: %s</string>
+</resources>

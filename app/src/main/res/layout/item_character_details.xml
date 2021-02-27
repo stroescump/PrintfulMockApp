@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.CharacterDetails"
+        android:id="@+id/tv_characterDetailsName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Luke Skywalker" />
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.CharacterDetails"
+        android:id="@+id/tv_characterDetailsHeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Height : 172 cm" />
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.CharacterDetails"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:id="@+id/tv_characterDetailsMass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Mass : 77 kg" />
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.CharacterDetails"
+        android:id="@+id/tv_characterDetailsHairColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Hair color : blond" />
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.CharacterDetails"
+        android:id="@+id/tv_characterDetailsSkinColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Skin color : fair" />
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.CharacterDetails"
+        android:id="@+id/tv_characterDetailsEyeColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Eye color : blue" />
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.CharacterDetails"
+        android:id="@+id/tv_characterDetailsBirthYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Birth year : 19BBY" />
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.CharacterDetails"
+        android:id="@+id/tv_characterDetailsGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Gender : male" />
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.CharacterDetails"
+        android:id="@+id/tv_characterDetailsFilms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="Film 1\nFilm 2\nFilm 3\nFilm 4\nFilm 5\nFilm 6\nFilm 7\nFilm 8" />
+
+</LinearLayout>

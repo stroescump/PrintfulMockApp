@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/item_character_background">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_characterAvatar"
+        android:layout_width="@dimen/dimen_100"
+        android:layout_height="@dimen/dimen_100"
+        android:layout_margin="@dimen/dimen_10"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+        app:strokeColor="@color/teal_900"
+        app:strokeWidth="@dimen/dimen_2"
+        tools:src="@tools:sample/avatars" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_characterName"
+        style="@style/TextAppearance.CharacterMainInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:textSize="@dimen/dimen_16"
+        app:layout_constraintBottom_toTopOf="@id/tv_characterHeight"
+        app:layout_constraintStart_toEndOf="@id/iv_characterAvatar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Luke Skywalker" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_characterHeight"
+        style="@style/TextAppearance.CharacterMainInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_20"
+        app:layout_constraintBottom_toTopOf="@id/tv_characterMass"
+        app:layout_constraintStart_toEndOf="@id/iv_characterAvatar"
+        app:layout_constraintTop_toBottomOf="@id/tv_characterName"
+        tools:text="Height : 172 cm" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_characterMass"
+        style="@style/TextAppearance.CharacterMainInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_characterAvatar"
+        app:layout_constraintTop_toBottomOf="@id/tv_characterHeight"
+        tools:text="Mass : 77" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
