@@ -13,12 +13,12 @@
         tools:listitem="@layout/item_character_recyclerview" />
 
     <View
-        android:visibility="gone"
         android:id="@+id/shadow_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:alpha="0.8"
         android:background="@drawable/shadow_characters_rv"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +32,13 @@
         app:layout_constraintGuide_percent="0.75" />
 
     <include
-        android:visibility="gone"
         android:id="@+id/progressBar_layout"
-        layout="@layout/layout_loading" />
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/layout_retryBtn"
+        layout="@layout/layout_retry_fetch"
+        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

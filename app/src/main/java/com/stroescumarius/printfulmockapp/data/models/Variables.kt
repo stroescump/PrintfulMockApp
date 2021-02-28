@@ -1,4 +1,4 @@
-package com.stroescumarius.printfulmockapp.models
+package com.stroescumarius.printfulmockapp.data.models
 
 import kotlin.properties.Delegates
 

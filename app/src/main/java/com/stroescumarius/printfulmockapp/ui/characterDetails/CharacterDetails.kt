@@ -1,20 +1,23 @@
 package com.stroescumarius.printfulmockapp.ui.characterDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.stroescumarius.printfulmockapp.R
+import com.stroescumarius.printfulmockapp.data.constants.Constants
+import com.stroescumarius.printfulmockapp.data.models.Character
+import com.stroescumarius.printfulmockapp.data.models.Film
+import com.stroescumarius.printfulmockapp.data.models.Resource
 import com.stroescumarius.printfulmockapp.databinding.ActivityCharacterDetailsBinding
 import com.stroescumarius.printfulmockapp.databinding.ItemCharacterDetailsBinding
-import com.stroescumarius.printfulmockapp.models.Character
-import com.stroescumarius.printfulmockapp.models.Film
 import com.stroescumarius.printfulmockapp.ui.base.BaseActivity
-import com.stroescumarius.printfulmockapp.utils.constants.Constants
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class CharacterDetails : BaseActivity(), CharacterDetailsContract.View {
-    private var presenter: CharacterDetailsPresenter? = null
+class CharacterDetails : BaseActivity() {
+    private val viewModel: CharacterDetailsViewModel by viewModel()
     private lateinit var binding: ActivityCharacterDetailsBinding
     private lateinit var itemBinding: ItemCharacterDetailsBinding
     private var character: Character? = null
@@ -23,13 +26,9 @@ class CharacterDetails : BaseActivity(), CharacterDetailsContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupViews()
-        initPresenter()
         checkForAvailableCharacter()
     }
 
-    override fun initPresenter() {
-        presenter = CharacterDetailsPresenter(this)
-    }
 
     private fun setupViews() {
         binding = ActivityCharacterDetailsBinding.inflate(layoutInflater)
@@ -60,8 +59,43 @@ class CharacterDetails : BaseActivity(), CharacterDetailsContract.View {
     private fun populateMovieList() {
         for (film in character!!.films!!) {
             val filmId = getFilmID(film)
-            presenter?.downloadFilm(filmId)
+            viewModel.downloadFilm(filmId).observe(this) { onDataChanged(it) }
         }
+    }
+
+    private fun onDataChanged(response: Resource<Film>) {
+        when (response.status) {
+            Resource.Status.SUCCESS -> {
+                handleSuccess(response)
+            }
+            Resource.Status.ERROR -> {
+                handleError(response, binding.root)
+                hideProgress()
+            }
+            Resource.Status.LOADING -> {
+                showProgress()
+            }
+        }
+    }
+
+    private fun handleSuccess(req: Resource<Film>) {
+        hideProgress()
+        setFilm(req)
+    }
+
+    private fun setFilm(req: Resource<Film>) {
+        if (req.data != null) updateFilmList(req.data)
+    }
+
+    private fun handleError(resource: Resource<Any>, view: View) {
+        resource.message?.let { message ->
+            displayNoFilmsMessage()
+            displayErrorMessage(message, view)
+        }
+    }
+
+    private fun displayErrorMessage(message: String, view: View) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun getFilmID(film: String) = film.filter { (it.isDigit()) }
@@ -123,17 +157,14 @@ class CharacterDetails : BaseActivity(), CharacterDetailsContract.View {
             .into(binding.ivCharacterAvatarDetails)
     }
 
-    override fun updateFilmList(film: Film) {
+    fun updateFilmList(film: Film) {
         itemBinding.tvCharacterDetailsFilms.text.appendMovie(film)
     }
 
-    override fun displayNoFilmsMessage() {
+    private fun displayNoFilmsMessage() {
+        Log.d("TAG", "displayNoFilmsMessage: called")
         itemBinding.tvCharacterDetailsFilms.text =
             getString(R.string.no_films_error)
-    }
-
-    override fun getRootView(): View {
-        return binding.root
     }
 
     override fun showProgress() {
@@ -144,9 +175,10 @@ class CharacterDetails : BaseActivity(), CharacterDetailsContract.View {
         binding.progressBarLayoutDetails.root.visibility = View.GONE
     }
 
-    override fun displayNoInternetMessage() {
+
+    override fun displayNoInternetMessage(view: View) {
         Snackbar.make(
-            binding.root,
+            view,
             getString(R.string.error_no_internet),
             Snackbar.LENGTH_LONG
         ).show()
@@ -168,18 +200,14 @@ class CharacterDetails : BaseActivity(), CharacterDetailsContract.View {
         return false
     }
 
-    override fun hasMovies() =
+    private fun hasMovies() =
         itemBinding.tvCharacterDetailsFilms.text != getString(R.string.no_films_error)
 
-    override fun hasErrorNoMovie() =
+    fun hasErrorNoMovie() =
         itemBinding.tvCharacterDetailsFilms.text == getString(R.string.no_films_error)
 
-    override fun clearFilms() {
+    fun clearFilms() {
         itemBinding.tvCharacterDetailsFilms.text = ""
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter = null
-    }
 }

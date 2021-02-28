@@ -1,7 +1,7 @@
 package com.stroescumarius.printfulmockapp.utils.retrofit
 
-import com.stroescumarius.printfulmockapp.models.Character
-import com.stroescumarius.printfulmockapp.models.Film
+import com.stroescumarius.printfulmockapp.data.models.Character
+import com.stroescumarius.printfulmockapp.data.models.Film
 
 abstract class NetworkCallbackMethods : CallbackCharacter, CallbackFilm {
 

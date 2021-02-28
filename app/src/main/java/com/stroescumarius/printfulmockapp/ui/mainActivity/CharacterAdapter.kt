@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.stroescumarius.printfulmockapp.databinding.ItemCharacterRecyclerviewBinding
-import com.stroescumarius.printfulmockapp.models.Character
-import com.stroescumarius.printfulmockapp.models.MeasureUnit
-import com.stroescumarius.printfulmockapp.utils.constants.Constants
+import com.stroescumarius.printfulmockapp.data.models.Character
+import com.stroescumarius.printfulmockapp.data.models.MeasureUnit
+import com.stroescumarius.printfulmockapp.data.constants.Constants
 import java.util.*
 import kotlin.collections.ArrayList
 

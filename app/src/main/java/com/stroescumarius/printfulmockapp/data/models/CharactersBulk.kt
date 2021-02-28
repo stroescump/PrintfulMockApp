@@ -1,6 +1,6 @@
-package com.stroescumarius.printfulmockapp.models
+package com.stroescumarius.printfulmockapp.data.models
 
-data class CharactersRetrofitMapping(
+data class CharactersBulk(
     var count: Int,
     var next: String,
     var previous: String,

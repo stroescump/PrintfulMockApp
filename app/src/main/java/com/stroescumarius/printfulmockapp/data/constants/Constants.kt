@@ -1,9 +1,9 @@
-package com.stroescumarius.printfulmockapp.utils.constants
+package com.stroescumarius.printfulmockapp.data.constants
 
 import com.stroescumarius.printfulmockapp.R
 
 class Constants {
-    companion object{
+    companion object {
         const val CHARACTER = "PrintfulMockApp.CharacterDetails"
         val AVATARS = listOf(
             R.drawable.img_1,
@@ -18,5 +18,7 @@ class Constants {
             R.drawable.img_10
         )
         const val CHARACTER_PHOTO_ID = "PrintfulMockApp.CharacterPhotoID"
+        const val noNetworkMessage = R.string.error_no_internet
+        const val timeoutError = "timeout"
     }
 }
