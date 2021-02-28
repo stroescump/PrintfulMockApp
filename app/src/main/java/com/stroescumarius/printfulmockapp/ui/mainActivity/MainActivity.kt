@@ -2,7 +2,6 @@ package com.stroescumarius.printfulmockapp.ui.mainActivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -70,13 +69,17 @@ class MainActivity : BaseActivity() {
         resource.message?.let { message ->
             displayErrorMessage(message, view)
             if (hasAvailableNetwork() && message == Constants.timeoutError) {
-                binding.layoutRetryBtn.btnRetryFetchData.visibility = View.VISIBLE
-                binding.layoutRetryBtn.btnRetryFetchData.setOnClickListener {
-                    viewModel.downloadCharacters().observe(this@MainActivity) { onDataChanged(it) }
-                }
+                setupRetryButton()
             }
         }
 
+    }
+
+    private fun setupRetryButton() {
+        binding.layoutRetryBtn.btnRetryFetchData.visibility = View.VISIBLE
+        binding.layoutRetryBtn.btnRetryFetchData.setOnClickListener {
+            viewModel.downloadCharacters().observe(this@MainActivity) { onDataChanged(it) }
+        }
     }
 
     private fun displayErrorMessage(message: String, view: View) {
@@ -149,7 +152,6 @@ class MainActivity : BaseActivity() {
 
     override fun onNetworkAvailable() {
         if (this::binding.isInitialized && !isDataCached() && !isFirstTimeNetworkCheck()) {
-            Log.d("MainActivity", "onNetworkAvailable: called")
             runOnUiThread { viewModel.downloadCharacters().observe(this) { onDataChanged(it) } }
         }
     }

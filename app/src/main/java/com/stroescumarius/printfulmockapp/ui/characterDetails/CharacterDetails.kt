@@ -157,12 +157,11 @@ class CharacterDetails : BaseActivity() {
             .into(binding.ivCharacterAvatarDetails)
     }
 
-    fun updateFilmList(film: Film) {
+    private fun updateFilmList(film: Film) {
         itemBinding.tvCharacterDetailsFilms.text.appendMovie(film)
     }
 
     private fun displayNoFilmsMessage() {
-        Log.d("TAG", "displayNoFilmsMessage: called")
         itemBinding.tvCharacterDetailsFilms.text =
             getString(R.string.no_films_error)
     }
