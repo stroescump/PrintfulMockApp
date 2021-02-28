@@ -6,7 +6,7 @@ import android.net.Network
 import android.net.NetworkRequest
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
-import com.stroescumarius.printfulmockapp.models.Variables
+import com.stroescumarius.printfulmockapp.data.models.Variables
 
 
 class NetworkMonitor
