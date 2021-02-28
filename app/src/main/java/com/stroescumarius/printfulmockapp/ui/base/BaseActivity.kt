@@ -1,26 +1,31 @@
 package com.stroescumarius.printfulmockapp.ui.base
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.stroescumarius.printfulmockapp.utils.networkmonitor.NetworkMonitor
 
-class BaseActivity : AppCompatActivity() {
-    private val connectivityManager by lazy {
-        application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+abstract class BaseActivity : AppCompatActivity() {
+    private val networkMonitor by lazy {
+        NetworkMonitor(
+            this
+        ) { onNetworkAvailable() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        checkIfNetworkAvailable()
+        networkMonitor.checkAvailableNetworks()
     }
 
-    private fun checkIfNetworkAvailable() {
-        TODO("Not yet implemented")
-    }
-    
     override fun onResume() {
         super.onResume()
-
+        networkMonitor.startNetworkMonitoring()
     }
+
+    override fun onPause() {
+        super.onPause()
+        networkMonitor.stopNetworkMonitoring()
+    }
+
+    abstract fun isDataCached(): Boolean
+    abstract fun onNetworkAvailable()
 }

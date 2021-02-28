@@ -13,6 +13,7 @@
         tools:listitem="@layout/item_character_recyclerview" />
 
     <View
+        android:visibility="gone"
         android:id="@+id/shadow_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -31,6 +32,7 @@
         app:layout_constraintGuide_percent="0.75" />
 
     <include
+        android:visibility="gone"
         android:id="@+id/progressBar_layout"
         layout="@layout/layout_loading" />
 

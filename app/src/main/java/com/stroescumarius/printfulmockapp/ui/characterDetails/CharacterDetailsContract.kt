@@ -6,6 +6,10 @@ import com.stroescumarius.printfulmockapp.ui.base.BaseView
 interface CharacterDetailsContract {
     interface View : BaseView {
         fun updateFilmList(film: Film)
+        fun displayNoFilmsMessage()
+        fun hasMovies(): Boolean
+        fun hasErrorNoMovie(): Boolean
+        fun clearFilms()
     }
 
     interface Presenter {

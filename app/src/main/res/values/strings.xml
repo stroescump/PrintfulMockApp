@@ -10,4 +10,6 @@
     <string name="eyeColor">Eye color: %s</string>
     <string name="birthYear">Birth year: %s</string>
     <string name="gender">Gender: %s</string>
+    <string name="error_no_internet">Please make sure you are connected to a network.</string>
+    <string name="no_films_error">No films available. Retry when you are connected to internet.</string>
 </resources>

@@ -5,6 +5,7 @@ import com.stroescumarius.printfulmockapp.ui.base.BaseView
 
 interface MainActivityContract {
     interface View : BaseView{
+        fun showShadowDecoration()
         fun updateRecycler(characters : MutableList<Character>)
     }
 

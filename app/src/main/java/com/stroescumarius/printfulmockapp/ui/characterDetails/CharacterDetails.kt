@@ -2,17 +2,18 @@ package com.stroescumarius.printfulmockapp.ui.characterDetails
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.stroescumarius.printfulmockapp.R
 import com.stroescumarius.printfulmockapp.databinding.ActivityCharacterDetailsBinding
 import com.stroescumarius.printfulmockapp.databinding.ItemCharacterDetailsBinding
 import com.stroescumarius.printfulmockapp.models.Character
 import com.stroescumarius.printfulmockapp.models.Film
+import com.stroescumarius.printfulmockapp.ui.base.BaseActivity
 import com.stroescumarius.printfulmockapp.utils.constants.Constants
 
-class CharacterDetails : AppCompatActivity(), CharacterDetailsContract.View {
+class CharacterDetails : BaseActivity(), CharacterDetailsContract.View {
     private var presenter: CharacterDetailsPresenter? = null
     private lateinit var binding: ActivityCharacterDetailsBinding
     private lateinit var itemBinding: ItemCharacterDetailsBinding
@@ -126,6 +127,15 @@ class CharacterDetails : AppCompatActivity(), CharacterDetailsContract.View {
         itemBinding.tvCharacterDetailsFilms.text.appendMovie(film)
     }
 
+    override fun displayNoFilmsMessage() {
+        itemBinding.tvCharacterDetailsFilms.text =
+            getString(R.string.no_films_error)
+    }
+
+    override fun getRootView(): View {
+        return binding.root
+    }
+
     override fun showProgress() {
         binding.progressBarLayoutDetails.root.visibility = View.VISIBLE
     }
@@ -134,9 +144,38 @@ class CharacterDetails : AppCompatActivity(), CharacterDetailsContract.View {
         binding.progressBarLayoutDetails.root.visibility = View.GONE
     }
 
+    override fun displayNoInternetMessage() {
+        Snackbar.make(
+            binding.root,
+            getString(R.string.error_no_internet),
+            Snackbar.LENGTH_LONG
+        ).show()
+    }
+
+
     private fun CharSequence.appendMovie(film: Film) {
         itemBinding.tvCharacterDetailsFilms.text =
             resources.getString(R.string.films, this, film.title)
+    }
+
+    override fun onNetworkAvailable() {
+        if (this::itemBinding.isInitialized && !isDataCached())
+            runOnUiThread { populateMovieList() }
+    }
+
+    override fun isDataCached(): Boolean {
+        if (hasMovies()) return true
+        return false
+    }
+
+    override fun hasMovies() =
+        itemBinding.tvCharacterDetailsFilms.text != getString(R.string.no_films_error)
+
+    override fun hasErrorNoMovie() =
+        itemBinding.tvCharacterDetailsFilms.text == getString(R.string.no_films_error)
+
+    override fun clearFilms() {
+        itemBinding.tvCharacterDetailsFilms.text = ""
     }
 
     override fun onDestroy() {
