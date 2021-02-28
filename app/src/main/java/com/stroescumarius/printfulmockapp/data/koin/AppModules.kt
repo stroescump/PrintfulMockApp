@@ -11,6 +11,7 @@ import com.stroescumarius.printfulmockapp.utils.retrofit.FilmApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -21,7 +22,7 @@ val appModules = module {
 
     viewModel { MainViewModel(get()) }
 
-    viewModel { CharacterDetailsViewModel(get()) }
+    viewModel { CharacterDetailsViewModel(get(), androidApplication()) }
 
     factory { FilmsRepositoryImpl(get()) }
 

@@ -8,13 +8,13 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.stroescumarius.printfulmockapp.R
+import com.stroescumarius.printfulmockapp.data.constants.Constants
 import com.stroescumarius.printfulmockapp.data.models.Character
 import com.stroescumarius.printfulmockapp.data.models.Resource
 import com.stroescumarius.printfulmockapp.data.models.Variables
 import com.stroescumarius.printfulmockapp.databinding.ActivityMainBinding
 import com.stroescumarius.printfulmockapp.ui.base.BaseActivity
 import com.stroescumarius.printfulmockapp.ui.characterDetails.CharacterDetails
-import com.stroescumarius.printfulmockapp.utils.constants.Constants
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity() {
@@ -27,10 +27,6 @@ class MainActivity : BaseActivity() {
         setupObservers()
         downloadCharacters()
         initRecycler()
-    }
-
-    private fun checkNetworkStatus() {
-        if (!hasAvailableNetwork()) displayNoInternetMessage(binding.root)
     }
 
     private fun setupViews() {
@@ -60,10 +56,32 @@ class MainActivity : BaseActivity() {
 
     private fun handleSuccess(resource: Resource<MutableList<Character>>) {
         hideProgress()
+        hideRetryButton()
         resource.data?.let { it -> updateRecycler(it) }
         showShadowDecoration()
     }
 
+    private fun hideRetryButton() {
+        if (binding.layoutRetryBtn.btnRetryFetchData.visibility == View.VISIBLE)
+            binding.layoutRetryBtn.btnRetryFetchData.visibility = View.GONE
+    }
+
+    private fun handleError(resource: Resource<Any>, view: View) {
+        resource.message?.let { message ->
+            displayErrorMessage(message, view)
+            if (hasAvailableNetwork() && message == Constants.timeoutError) {
+                binding.layoutRetryBtn.btnRetryFetchData.visibility = View.VISIBLE
+                binding.layoutRetryBtn.btnRetryFetchData.setOnClickListener {
+                    viewModel.downloadCharacters().observe(this@MainActivity) { onDataChanged(it) }
+                }
+            }
+        }
+
+    }
+
+    private fun displayErrorMessage(message: String, view: View) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
+    }
 
     private fun downloadCharacters() {
         viewModel.downloadCharacters()

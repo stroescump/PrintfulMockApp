@@ -12,4 +12,5 @@
     <string name="gender">Gender: %s</string>
     <string name="error_no_internet">Please make sure you are connected to a network.</string>
     <string name="no_films_error">No films available. Retry when you are connected to internet.</string>
+    <string name="retry">Retry</string>
 </resources>

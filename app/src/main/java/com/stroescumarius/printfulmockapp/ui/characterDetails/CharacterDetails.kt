@@ -1,18 +1,19 @@
 package com.stroescumarius.printfulmockapp.ui.characterDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.stroescumarius.printfulmockapp.R
+import com.stroescumarius.printfulmockapp.data.constants.Constants
 import com.stroescumarius.printfulmockapp.data.models.Character
 import com.stroescumarius.printfulmockapp.data.models.Film
 import com.stroescumarius.printfulmockapp.data.models.Resource
 import com.stroescumarius.printfulmockapp.databinding.ActivityCharacterDetailsBinding
 import com.stroescumarius.printfulmockapp.databinding.ItemCharacterDetailsBinding
 import com.stroescumarius.printfulmockapp.ui.base.BaseActivity
-import com.stroescumarius.printfulmockapp.utils.constants.Constants
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class CharacterDetails : BaseActivity() {
@@ -68,8 +69,7 @@ class CharacterDetails : BaseActivity() {
                 handleSuccess(response)
             }
             Resource.Status.ERROR -> {
-                if (hasAvailableNetwork()) handleError(response, binding.root)
-                else displayNoInternetMessage(binding.root)
+                handleError(response, binding.root)
                 hideProgress()
             }
             Resource.Status.LOADING -> {
@@ -78,9 +78,24 @@ class CharacterDetails : BaseActivity() {
         }
     }
 
-    private fun handleSuccess(request: Resource<Film>) {
+    private fun handleSuccess(req: Resource<Film>) {
         hideProgress()
+        setFilm(req)
+    }
 
+    private fun setFilm(req: Resource<Film>) {
+        if (req.data != null) updateFilmList(req.data)
+    }
+
+    private fun handleError(resource: Resource<Any>, view: View) {
+        resource.message?.let { message ->
+            displayNoFilmsMessage()
+            displayErrorMessage(message, view)
+        }
+    }
+
+    private fun displayErrorMessage(message: String, view: View) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun getFilmID(film: String) = film.filter { (it.isDigit()) }
@@ -146,7 +161,8 @@ class CharacterDetails : BaseActivity() {
         itemBinding.tvCharacterDetailsFilms.text.appendMovie(film)
     }
 
-    fun displayNoFilmsMessage() {
+    private fun displayNoFilmsMessage() {
+        Log.d("TAG", "displayNoFilmsMessage: called")
         itemBinding.tvCharacterDetailsFilms.text =
             getString(R.string.no_films_error)
     }

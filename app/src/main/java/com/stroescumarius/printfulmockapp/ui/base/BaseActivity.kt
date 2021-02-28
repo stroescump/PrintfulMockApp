@@ -34,14 +34,6 @@ abstract class BaseActivity : AppCompatActivity() {
         return Variables.isNetworkConnected
     }
 
-    fun handleError(resource: Resource<Any>, view: View) {
-        resource.message?.let { message -> displayErrorMessage(message, view) }
-    }
-
-    private fun displayErrorMessage(message: String, view: View) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
-    }
-
     abstract fun isDataCached(): Boolean
     abstract fun onNetworkAvailable()
     abstract fun showProgress()
